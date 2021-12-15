@@ -17,6 +17,29 @@ import datetime
 #library for showing icon path
 import glob
 
+#The function for the get usd price
+
+def get_USD_price():
+    try:
+        url = 'https://www.tgju.org/profile/price_dollar_rl'
+        response = requests.get(url)
+
+        if response.status_code==200:
+
+            soup = BeautifulSoup(response.text, 'html.parser')
+            dom = etree.HTML(str(soup))
+            res = dom.xpath('//*[@id="main"]/div[1]/div[2]/div/div[1]/div/div[1]/div/div[1]/table/tbody/tr[1]/td[2]')[0].text
+
+            return res.replace(",", "")[:-1]
+
+    except:
+
+        return False
+
+
+
+
+
 
 
 
