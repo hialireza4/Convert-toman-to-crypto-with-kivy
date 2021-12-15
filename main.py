@@ -104,3 +104,17 @@ sm.add_widget(Splash(name = "splash"))
 sm.add_widget(MainWindow(name='mainwindow'))
 sm.add_widget(SelectWindow(name='selectwindow'))
 sm.add_widget(SettingWindow(name="settingwindow"))
+
+#main class for the run app
+class MrAsaConvertor(MDApp):
+    def build(self):
+        return Builder.load_string(KV)
+
+
+
+#func for the run app
+def start_app():
+    MrAsaConvertor().run()
+
+if __name__ == "__main__":
+    start_app()
