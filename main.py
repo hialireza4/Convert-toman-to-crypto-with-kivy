@@ -74,3 +74,33 @@ list_crypto = {"BTC":"Bitcoin",
     "MANA":"Decentraland",
 }
 
+
+#kivy design code
+
+KV = '''
+ScreenManager:
+    id:"screen_manager"
+	Splash:
+    MainWindow:
+	SelectWindow:
+    SettingWindow:
+'''
+
+##create class of pages
+class Splash(Screen):
+    pass
+
+class MainWindow(Screen):
+	pass
+
+class SelectWindow(Screen):
+	pass
+
+class SettingWindow(Screen):
+	pass
+#create screenmanager and add the pages in to the screenmanager
+sm = ScreenManager()
+sm.add_widget(Splash(name = "splash"))
+sm.add_widget(MainWindow(name='mainwindow'))
+sm.add_widget(SelectWindow(name='selectwindow'))
+sm.add_widget(SettingWindow(name="settingwindow"))
