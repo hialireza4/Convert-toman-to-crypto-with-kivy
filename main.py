@@ -53,3 +53,24 @@ def convert_toman2crypto(toman,usd,crypto):
     except:
         return("Value is bad")
 
+
+##add list of crypto
+list_crypto = {"BTC":"Bitcoin",
+    "BNB":"Binance Coin",
+    "MATIC":"Polygon-Pos",
+    "SOL":"Solana",
+    "ADA":"Cardano",
+    "DOT":"Polkadot",
+    "TRX":"TRON",
+    "LINK":"Chainlink",
+    "ZEC":"Zcash",
+    "ETC":"Ethereum-Classic",
+    "BCH":"Bitcoin-Cash",
+    "USDT":"Tether",
+    "XMR":"Monero",
+    "DAI":"Dai",
+    "EOS":"Eos",
+    "LTC":"Litecoin",
+    "MANA":"Decentraland",
+}
+
