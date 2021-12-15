@@ -84,6 +84,12 @@ ScreenManager:
     MainWindow:
 	SelectWindow:
     SettingWindow:
+
+<Splash>:
+    Image:
+        source:"assets\splash.png"
+
+
 '''
 
 ##create class of pages
