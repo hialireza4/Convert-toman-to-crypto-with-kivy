@@ -1,5 +1,6 @@
 #UI and Kivy library
 import kivy
+import PIL
 kivy.require('2.0.0')
 from kivymd.app import MDApp
 from kivy.lang import Builder
@@ -88,6 +89,10 @@ ScreenManager:
 <Splash>:
     Image:
         source:"assets\splash.png"
+<Mainwindow>:
+    name:"mainwindow"
+
+
 
 
 '''
@@ -115,6 +120,15 @@ sm.add_widget(SettingWindow(name="settingwindow"))
 class MrAsaConvertor(MDApp):
     def build(self):
         return Builder.load_string(KV)
+
+    def on_start(self):
+        Clock.schedule_once(self.go_to_main_page,5)
+
+    def go_to_main_page(self,*args):
+        MDApp.get_running_app().root.current = 'mainwindow'
+
+
+
 
 
 
