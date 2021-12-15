@@ -8,7 +8,7 @@ from kivymd.uix.list.list import  TwoLineAvatarListItem , ImageLeftWidget
 from kivy.clock import Clock
 from kivy.core.window import Window
 #version -android
-Window.size = (400, 800)
+Window.size = (440, 775)
 #library for get price
 import requests
 from bs4 import BeautifulSoup
