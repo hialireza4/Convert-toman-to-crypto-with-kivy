@@ -39,10 +39,17 @@ def get_USD_price():
 
 
 
+##The Function for convert toman to the crypto
 
+def convert_toman2crypto(toman,usd,crypto):
+    #toman is value of toman of converted
 
-
-
-
-##The Function for get price
+    try:
+        toman = float(toman)
+        crypto = float(crypto)
+        usd = float(usd)
+        
+        return str(toman*(1/usd)*(1/crypto))
+    except:
+        return("Value is bad")
 
