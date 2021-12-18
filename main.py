@@ -9,7 +9,7 @@ from kivymd.uix.list.list import  TwoLineAvatarListItem , ImageLeftWidget
 from kivy.clock import Clock
 from kivy.core.window import Window
 #version -android
-Window.size = (440, 775)
+#Window.size = (440, 775)
 #library for get price
 import requests
 from bs4 import BeautifulSoup
@@ -91,7 +91,32 @@ ScreenManager:
         source:"assets\splash.png"
 <Mainwindow>:
     name:"mainwindow"
+    FloatLayout:    
+        MDIconButton:
+            icon: 'plus-outline'
+            pos_hint: {"center_x": .1, "center_y": .9}
+            user_font_size: "42sp"
+            on_press:
+                root.manager.current = "selectwindow"
+        MDIconButton:
+            icon: 'account-cog-outline'
+            pos_hint: {"center_x": .5, "center_y": .9}
+            user_font_size: "42sp"
+            on_press:
+                root.manager.current = "settingwindow"
+        MDIconButton:
+            id:update_database
+            icon: 'update'
+            pos_hint: {"center_x": .9, "center_y": .9}
+            user_font_size: "42sp"
+            on_press:
+                app.update_data()
+    
 
+<SelectWindow>:
+    name:"selectwindow"
+<SettingWindow>:
+    name:"settingwindow"
 
 
 
