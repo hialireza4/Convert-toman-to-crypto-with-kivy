@@ -160,7 +160,7 @@ class MrAsaConvertor(MDApp):
         MDApp.get_running_app().root.current = 'mainwindow'
 
     def update_data(self):  #this function for get data from internet and update the status.
-        self.mainwindow = MDApp.get_running_app().root.get_screen('mainwindow')
+        self.mainwindow = MDApp.get_running_app().root.get_screen('mainwindow') #get the windows path
         try:
             self.usd_price = get_USD_price()
             self.cg = CoinGeckoAPI()
