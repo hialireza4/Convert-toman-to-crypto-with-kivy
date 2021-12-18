@@ -15,6 +15,7 @@ import requests
 from bs4 import BeautifulSoup
 from lxml import etree
 import datetime
+from pycoingecko import CoinGeckoAPI
 #library for showing icon path
 import glob
 
@@ -158,8 +159,15 @@ class MrAsaConvertor(MDApp):
     def go_to_main_page(self,*args):
         MDApp.get_running_app().root.current = 'mainwindow'
 
-    def update_data(self):  #this function for get data from internet.
-        pass
+    def update_data(self):  #this function for get data from internet and update the status.
+        self.mainwindow = MDApp.get_running_app().root.get_screen('mainwindow')
+        try:
+            self.usd_price = get_USD_price()
+            self.cg = CoinGeckoAPI()
+            st = "(success connotation)"
+        except:
+            st = "(failure connotation)"
+        self.mainwindow.ids.last_update_text.text = "last update:" + str(datetime.datetime.now())[:-7]+st
 
         
 
