@@ -6,6 +6,8 @@ from kivymd.app import MDApp
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen 
 from kivymd.uix.list.list import  TwoLineAvatarListItem , ImageLeftWidget
+from kivymd.uix.boxlayout import MDBoxLayout
+from kivymd.uix.list import IRightBodyTouch
 from kivy.clock import Clock
 from kivy.core.window import Window
 #version -android
@@ -52,6 +54,14 @@ def convert_toman2crypto(toman,usd,crypto):
         usd = float(usd)
         
         return str(toman*(1/usd)*(1/crypto))
+    except:
+        return("Value is bad")
+
+def convert_Toman2USD(toman,usd_price):
+    try:
+        toman = float(toman)
+        usd_price = float(usd_price)
+        return str((1/usd_price)*toman)
     except:
         return("Value is bad")
 
@@ -127,7 +137,7 @@ ScreenManager:
 ##center main window object
 #
         MDIconButton:
-            icon: 'assets/crypptoicon/irr.png'
+            icon: 'assets/crypptoicon/main page/irr.png'
             pos_hint: {"center_x": .1, "center_y": .80}
             user_font_size: "18sp"
 
@@ -141,8 +151,8 @@ ScreenManager:
         MDTextField:
             id:toman
             hint_text: "Enter Price"
-            mode: "fill"
-            text: "10000"
+            mode: "rectangle"
+            text: ""
             font_size:16
             pos_hint: {"center_x": .65, "center_y": .80}
             size_hint:.5,None
@@ -150,7 +160,7 @@ ScreenManager:
             
         #----
         MDIconButton:
-            icon: 'assets/crypptoicon/usd.png'
+            icon: 'assets/crypptoicon/main page/usd.png'
             pos_hint: {"center_x": .1, "center_y": 0.70}
             user_font_size: "18sp"
         
@@ -161,9 +171,9 @@ ScreenManager:
 
         MDLabel:
             id:usd
-            text: "10000"
+            text: ""
             font_size:16
-            pos_hint: {"center_x": 1.1, "center_y": .70}
+            pos_hint: {"center_x": 1, "center_y": .70}
         #---
         MDIconButton:
             id:selcoinicon
@@ -179,9 +189,9 @@ ScreenManager:
         
         MDLabel:
             id:cryptovalue
-            text: "10000"
+            text: ""
             font_size:16
-            pos_hint: {"center_x": 1.1, "center_y": .60}
+            pos_hint: {"center_x": 1, "center_y": .60}
         #---
         MDRoundFlatIconButton:
             icon: "account-cash-outline"
@@ -194,10 +204,43 @@ ScreenManager:
 
 <SelectWindow>:
     name:"selectwindow"
+
+    MDBoxLayout:
+        orientation: "vertical"
+        pos_hint: {"top": 1}
+        spacing: dp(10)
+        MDToolbar:
+            title: "Select Crypto"
+            left_action_items: [["arrow-left", lambda x: app.go_to_main_page()]]
+        MDBoxLayout:
+            padding: dp(20)
+            adaptive_height: True
+
+            MDIconButton:
+                icon: 'magnify'
+
+            MDTextField:
+                id: search_field
+                hint_text: 'search cryptocurrency(beta test)'
+        ScrollView:
+            MDList:
+                id: text_container
 <SettingWindow>:
     name:"settingwindow"
 
+    MDToolbar:
+        title: "Select Crypto"
+        left_action_items: [["arrow-left", lambda x: app.go_to_main_page()]]
+        pos_hint: {"center_y": 0.98}
+    
+    MDSwitch:
+        pos_hint: {"center_x": .5, "center_y": .5}
+        on_active:
+            app.on_checkbox_active(*args)
 
+    MDLabel:
+        pos_hint: {"center_x": .5, "center_y": .7}
+        text:"this is a beta test "
 
 '''
 
@@ -227,6 +270,21 @@ class MrAsaConvertor(MDApp):
 
     def on_start(self):
         Clock.schedule_once(self.go_to_main_page,5)
+        self.first = "Bit Coin"
+        icon_path = glob.glob("assets/crypptoicon/*.png")
+        for _ in range(len(icon_path)):
+            icon_path[_]=icon_path[_].replace("\\","//")
+        self.coin_screen = MDApp.get_running_app().root.get_screen('selectwindow')
+        for i in icon_path:
+            text2 = i[20:].replace(".png","").upper()
+            text1 = list_crypto[text2]
+            icons = ImageLeftWidget(source=i)
+            items = TwoLineAvatarListItem(text=text1,
+            secondary_text= text2,
+            on_release=self.sel_crypto)
+            items.add_widget(icons)
+            self.coin_screen.ids.text_container.add_widget(items)
+
 
     def go_to_main_page(self,*args):
         MDApp.get_running_app().root.current = 'mainwindow'
@@ -241,10 +299,36 @@ class MrAsaConvertor(MDApp):
             st = "(failure connection)"
         self.mainwindow.ids.last_update_text.text = "last update:" + str(datetime.datetime.now())[:-7]+st
 
-        
+    def sel_crypto(self, TwoLineAvatarListItem):
+        self.mainwindow = MDApp.get_running_app().root.get_screen('mainwindow')
+        self.first =  TwoLineAvatarListItem.text
+        self.coin_selected = TwoLineAvatarListItem.secondary_text
+        self.mainwindow.ids.selcointext.text =self.coin_selected
+        self.mainwindow.ids.selcoinicon.icon = "assets/crypptoicon/"+str(self.coin_selected).casefold()+".png"
+        MDApp.get_running_app().root.current = "mainwindow"
 
+    def cvn(self):
+        self.mainwindow = MDApp.get_running_app().root.get_screen('mainwindow')
+        try:
+            self.mainwindow.ids.usd.text = convert_Toman2USD(self.mainwindow.ids.toman.text,self.usd_price)
+            self.val = self.cg.get_price(ids=self.first, vs_currencies='usd')
+            if self.val!={}:
+                self.val=self.val.get(list(self.val.keys())[0]).get("usd")
+            else:
+                self.val=0
 
-
+            self.mainwindow.ids.cryptovalue.text = convert_toman2crypto(self.mainwindow.ids.toman.text,
+            self.val,
+            self.usd_price)
+        except:
+            self.mainwindow.ids.usd.text ="Eroor"
+            self.mainwindow.ids.cryptovalue.text ="Eroor"
+    
+    def on_checkbox_active(self, _,value):
+        if value:
+            self.theme_cls.theme_style = "Dark"
+        else:
+            self.theme_cls.theme_style = "Light"
 
 
 
