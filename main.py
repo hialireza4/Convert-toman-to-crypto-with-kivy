@@ -111,6 +111,12 @@ ScreenManager:
             user_font_size: "42sp"
             on_press:
                 app.update_data()
+
+        MDLabel:
+            id:last_update_text
+            text: "last update:"
+            font_size:12
+            pos_hint: {"center_x": 0.55, "center_y": 0.09}
     
 
 <SelectWindow>:
@@ -151,6 +157,11 @@ class MrAsaConvertor(MDApp):
 
     def go_to_main_page(self,*args):
         MDApp.get_running_app().root.current = 'mainwindow'
+
+    def update_data(self):  #this function for get data from internet.
+        pass
+
+        
 
 
 
