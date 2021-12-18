@@ -93,31 +93,103 @@ ScreenManager:
 <Mainwindow>:
     name:"mainwindow"
     FloatLayout:    
+##icon in the up of page
+
+#goto select crypto
         MDIconButton:
             icon: 'plus-outline'
-            pos_hint: {"center_x": .1, "center_y": .9}
-            user_font_size: "42sp"
+            pos_hint: {"center_x": .1, "center_y": .95}
+            user_font_size: "35sp"
             on_press:
                 root.manager.current = "selectwindow"
+#goto setting icon
         MDIconButton:
             icon: 'account-cog-outline'
-            pos_hint: {"center_x": .5, "center_y": .9}
-            user_font_size: "42sp"
+            pos_hint: {"center_x": .5, "center_y": .95}
+            user_font_size: "35sp"
             on_press:
                 root.manager.current = "settingwindow"
+#update_data icon                        
         MDIconButton:
             id:update_database
             icon: 'update'
-            pos_hint: {"center_x": .9, "center_y": .9}
-            user_font_size: "42sp"
+            pos_hint: {"center_x": .9, "center_y": .95}
+            user_font_size: "35sp"
             on_press:
                 app.update_data()
-
+##label in the down of window
+#for show status
         MDLabel:
             id:last_update_text
             text: "last update:"
             font_size:12
             pos_hint: {"center_x": 0.55, "center_y": 0.09}
+##center main window object
+#
+        MDIconButton:
+            icon: 'assets/crypptoicon/irr.png'
+            pos_hint: {"center_x": .1, "center_y": .80}
+            user_font_size: "18sp"
+
+
+        
+        MDLabel:
+            text: "TOMAN"
+            font_size:16
+            pos_hint: {"center_x": .7, "center_y": .80}
+
+        MDTextField:
+            id:toman
+            hint_text: "Enter Price"
+            mode: "fill"
+            text: "10000"
+            font_size:16
+            pos_hint: {"center_x": .65, "center_y": .80}
+            size_hint:.5,None
+
+            
+        #----
+        MDIconButton:
+            icon: 'assets/crypptoicon/usd.png'
+            pos_hint: {"center_x": .1, "center_y": 0.70}
+            user_font_size: "18sp"
+        
+        MDLabel:
+            text: "USD"
+            font_size:16
+            pos_hint: {"center_x": .7, "center_y": 0.70}
+
+        MDLabel:
+            id:usd
+            text: "10000"
+            font_size:16
+            pos_hint: {"center_x": 1.1, "center_y": .70}
+        #---
+        MDIconButton:
+            id:selcoinicon
+            icon: 'assets/crypptoicon/btc.png'
+            pos_hint: {"center_x": .1, "center_y": 0.60}
+            user_font_size: "18sp"
+        
+        MDLabel:
+            id:selcointext
+            text: "BTC"
+            font_size:16
+            pos_hint: {"center_x": .7, "center_y": 0.60}
+        
+        MDLabel:
+            id:cryptovalue
+            text: "10000"
+            font_size:16
+            pos_hint: {"center_x": 1.1, "center_y": .60}
+        #---
+        MDRoundFlatIconButton:
+            icon: "account-cash-outline"
+            text: "Convert"
+            font_size:16
+            pos_hint: {"center_x": 0.5, "center_y": .50}
+            
+            on_press:app.cvn()
     
 
 <SelectWindow>:
@@ -164,9 +236,9 @@ class MrAsaConvertor(MDApp):
         try:
             self.usd_price = get_USD_price()
             self.cg = CoinGeckoAPI()
-            st = "(success connotation)"
+            st = "(success connection)"
         except:
-            st = "(failure connotation)"
+            st = "(failure connection)"
         self.mainwindow.ids.last_update_text.text = "last update:" + str(datetime.datetime.now())[:-7]+st
 
         
