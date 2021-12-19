@@ -1,16 +1,11 @@
 #UI and Kivy library
-from configparser import Error
 import kivy
-import PIL
 kivy.require('2.0.0')
 from kivymd.app import MDApp
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen 
 from kivymd.uix.list.list import  TwoLineAvatarListItem , ImageLeftWidget
-from kivymd.uix.boxlayout import MDBoxLayout
-from kivymd.uix.list import IRightBodyTouch
 from kivy.clock import Clock
-from kivy.core.window import Window
 #version -android
 #Window.size = (440, 775)
 #library for get price
@@ -93,14 +88,10 @@ list_crypto = {"BTC":"Bitcoin",
 KV = '''
 ScreenManager:
     id:"screen_manager"
-	Splash:
     MainWindow:
 	SelectWindow:
     SettingWindow:
 
-<Splash>:
-    Image:
-        source:"assets\splash.png"
 <Mainwindow>:
     name:"mainwindow"
     FloatLayout:    
@@ -246,8 +237,6 @@ ScreenManager:
 '''
 
 ##create class of pages
-class Splash(Screen):
-    pass
 
 class MainWindow(Screen):
 	pass
@@ -259,7 +248,6 @@ class SettingWindow(Screen):
 	pass
 #create screenmanager and add the pages in to the screenmanager
 sm = ScreenManager()
-sm.add_widget(Splash(name = "splash"))
 sm.add_widget(MainWindow(name='mainwindow'))
 sm.add_widget(SelectWindow(name='selectwindow'))
 sm.add_widget(SettingWindow(name="settingwindow"))
@@ -270,7 +258,6 @@ class MrAsaConvertor(MDApp):
         return Builder.load_string(KV)
 
     def on_start(self):
-        Clock.schedule_once(self.go_to_main_page,5)
         self.first = "Bit Coin"
         icon_path = glob.glob("assets/crypptoicon/*.png")
         for _ in range(len(icon_path)):
