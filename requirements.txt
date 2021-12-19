@@ -1,0 +1,7 @@
+kivy
+kivymd
+Pillow
+requests
+beautifulsoup4
+lxml
+pycoingecko
