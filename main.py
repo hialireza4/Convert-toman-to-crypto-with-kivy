@@ -1,11 +1,8 @@
 #UI and Kivy library
-import kivy
-kivy.require('2.0.0')
 from kivymd.app import MDApp
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen 
 from kivymd.uix.list.list import  TwoLineAvatarListItem , ImageLeftWidget
-from kivy.clock import Clock
 #version -android
 #Window.size = (440, 775)
 #library for get price
@@ -319,20 +316,10 @@ class MrAsaConvertor(MDApp):
             self.theme_cls.theme_style = "Light"
 
 
-class ErorrApp(MDApp):
-    def build(self):
-        return Builder.load_string('''
-        MDLabel:
-            text:"Error please close the app"
-        ''')
-
 
 #func for the run app
 def start_app():
-    try:
-        MrAsaConvertor().run()
-    except:
-        ErorrApp().run()
+    MrAsaConvertor().run()
 
-if __name__ == "__main__":
-    start_app()
+
+start_app()
