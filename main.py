@@ -1,4 +1,5 @@
 #UI and Kivy library
+from configparser import Error
 import kivy
 import PIL
 kivy.require('2.0.0')
@@ -331,10 +332,20 @@ class MrAsaConvertor(MDApp):
             self.theme_cls.theme_style = "Light"
 
 
+class ErorrApp(MDApp):
+    def build(self):
+        return Builder.load_string('''
+        MDLabel:
+            text:"Error please close the app"
+        ''')
+
 
 #func for the run app
 def start_app():
-    MrAsaConvertor().run()
+    try:
+        MrAsaConvertor().run()
+    except:
+        ErorrApp().run()
 
 if __name__ == "__main__":
     start_app()
