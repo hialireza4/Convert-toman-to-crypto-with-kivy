@@ -2,7 +2,7 @@
 from kivymd.app import MDApp
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen 
-from kivymd.uix.list.list import  TwoLineAvatarListItem , ImageLeftWidget
+from kivymd.uix.list import  TwoLineAvatarListItem , ImageLeftWidget
 from kivymd.uix.dialog import MDDialog
 from kivy.properties import StringProperty
 from kivymd.uix.list import OneLineAvatarListItem
@@ -280,11 +280,11 @@ class MrAsaConvertor(MDApp):
     def on_start(self):
         self.first = "Bit Coin"
         icon_path = glob.glob("assets/select_page/*.png")
-        for _ in range(len(icon_path)):
-            icon_path[_]=icon_path[_].replace("\\","//")
+        #for _ in range(len(icon_path)):
+         #   icon_path[_]=icon_path[_].replace("\\","//")
         self.coin_screen = MDApp.get_running_app().root.get_screen('selectwindow')
         for i in icon_path:
-            text2 = i[20:].replace(".png","").upper()
+            text2 = i[19:].replace(".png","").upper()         
             text1 = list_crypto[text2]
             icons = ImageLeftWidget(source=i)
             items = TwoLineAvatarListItem(text=text1,
