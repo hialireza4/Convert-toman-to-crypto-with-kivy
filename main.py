@@ -337,7 +337,6 @@ class MrAsaConvertor(MDApp):
         self.settings_toolbar=MDApp.get_running_app().root.get_screen('settingwindow')
         if value:
             self.theme_cls.theme_style = "Dark"
-            print(self.select_toolbar.ids.select_toolbar.md_bg_color)
             self.select_toolbar.ids.select_toolbar.md_bg_color =[0.3,0.3,0.3,1]
             self.settings_toolbar.ids.setting_toolbar.md_bg_color =[0.3,0.3,0.3,1]
 
