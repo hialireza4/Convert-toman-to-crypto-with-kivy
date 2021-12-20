@@ -3,6 +3,9 @@ from kivymd.app import MDApp
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen 
 from kivymd.uix.list.list import  TwoLineAvatarListItem , ImageLeftWidget
+from kivymd.uix.dialog import MDDialog
+from kivy.properties import StringProperty
+from kivymd.uix.list import OneLineAvatarListItem
 #version -android
 #Window.size = (440, 775)
 #library for get price
@@ -126,7 +129,7 @@ ScreenManager:
 ##center main window object
 #
         MDIconButton:
-            icon: 'assets/crypptoicon/main page/irr.png'
+            icon: 'assets/main_page/irr.png'
             pos_hint: {"center_x": .1, "center_y": .80}
             user_font_size: "18sp"
 
@@ -149,7 +152,7 @@ ScreenManager:
             
         #----
         MDIconButton:
-            icon: 'assets/crypptoicon/main page/usd.png'
+            icon: 'assets/main_page/usd.png'
             pos_hint: {"center_x": .1, "center_y": 0.70}
             user_font_size: "18sp"
         
@@ -166,7 +169,7 @@ ScreenManager:
         #---
         MDIconButton:
             id:selcoinicon
-            icon: 'assets/crypptoicon/btc.png'
+            icon: 'assets/select_page/btc.png'
             pos_hint: {"center_x": .1, "center_y": 0.60}
             user_font_size: "18sp"
         
@@ -199,8 +202,10 @@ ScreenManager:
         pos_hint: {"top": 1}
         spacing: dp(10)
         MDToolbar:
+            id:select_toolbar
             title: "Select Crypto"
             left_action_items: [["arrow-left", lambda x: app.go_to_main_page()]]
+            md_bg_color: app.theme_cls.primary_dark
         MDBoxLayout:
             padding: dp(20)
             adaptive_height: True
@@ -214,23 +219,37 @@ ScreenManager:
         ScrollView:
             MDList:
                 id: text_container
+<Item>
+    ImageLeftWidget:
+        source: root.source
+
+
 <SettingWindow>:
     name:"settingwindow"
+    MDBoxLayout:
+        orientation: "vertical"
+        pos_hint: {"top": 1}
+        spacing: dp(10)
+        MDToolbar:
+            id:setting_toolbar
+            title: "Settings"
+            left_action_items: [["arrow-left", lambda x: app.go_to_main_page()]]
+            md_bg_color: app.theme_cls.primary_dark
+        ScrollView:
+            MDList:
+                OneLineListItem:
+                    text:"Dark mode"
+                    font_size:22
 
-    MDToolbar:
-        title: "Select Crypto"
-        left_action_items: [["arrow-left", lambda x: app.go_to_main_page()]]
-        pos_hint: {"center_y": 0.98}
-    
-    MDSwitch:
-        pos_hint: {"center_x": .5, "center_y": .5}
-        on_active:
-            app.on_checkbox_active(*args)
+                    MDSwitch:
+                        widget_style: "ios"
+                        pos_hint: {"center_x": .9, "center_y": .5}
+                        on_active:
+                            app.on_checkbox_active(*args)
 
-    MDLabel:
-        pos_hint: {"center_x": .5, "center_y": .7}
-        text:"this is a beta test "
-
+                OneLineListItem:
+                    text:"About me"
+                    on_release: app.show_about_dialog()
 '''
 
 ##create class of pages
@@ -243,6 +262,10 @@ class SelectWindow(Screen):
 
 class SettingWindow(Screen):
 	pass
+
+class Item(OneLineAvatarListItem):
+    divider = None
+    source = StringProperty()
 #create screenmanager and add the pages in to the screenmanager
 sm = ScreenManager()
 sm.add_widget(MainWindow(name='mainwindow'))
@@ -256,7 +279,7 @@ class MrAsaConvertor(MDApp):
 
     def on_start(self):
         self.first = "Bit Coin"
-        icon_path = glob.glob("assets/crypptoicon/*.png")
+        icon_path = glob.glob("assets/select_page/*.png")
         for _ in range(len(icon_path)):
             icon_path[_]=icon_path[_].replace("\\","//")
         self.coin_screen = MDApp.get_running_app().root.get_screen('selectwindow')
@@ -289,7 +312,7 @@ class MrAsaConvertor(MDApp):
         self.first =  TwoLineAvatarListItem.text
         self.coin_selected = TwoLineAvatarListItem.secondary_text
         self.mainwindow.ids.selcointext.text =self.coin_selected
-        self.mainwindow.ids.selcoinicon.icon = "assets/crypptoicon/"+str(self.coin_selected).casefold()+".png"
+        self.mainwindow.ids.selcoinicon.icon = "assets/select_page/"+str(self.coin_selected).casefold()+".png"
         MDApp.get_running_app().root.current = "mainwindow"
 
     def cvn(self):
@@ -310,12 +333,34 @@ class MrAsaConvertor(MDApp):
             self.mainwindow.ids.cryptovalue.text ="Eroor"
     
     def on_checkbox_active(self, _,value):
+        self.select_toolbar=MDApp.get_running_app().root.get_screen('selectwindow')
+        self.settings_toolbar=MDApp.get_running_app().root.get_screen('settingwindow')
         if value:
             self.theme_cls.theme_style = "Dark"
+            print(self.select_toolbar.ids.select_toolbar.md_bg_color)
+            self.select_toolbar.ids.select_toolbar.md_bg_color =[0.3,0.3,0.3,1]
+            self.settings_toolbar.ids.setting_toolbar.md_bg_color =[0.3,0.3,0.3,1]
+
         else:
             self.theme_cls.theme_style = "Light"
+            self.select_toolbar.ids.select_toolbar.md_bg_color =[0.09803921568627451, 0.4627450980392157, 0.8235294117647058, 1.0]
+            self.settings_toolbar.ids.setting_toolbar.md_bg_color =[0.09803921568627451, 0.4627450980392157, 0.8235294117647058, 1.0]
 
 
+    def show_about_dialog(self):
+
+        self.dialog = MDDialog(
+            title="About me",
+            text="You can find me in the:",
+            radius=[20, 7, 20, 7],
+            type="simple",
+            items=[
+                Item(text="hialireza4", source="github.png"),
+                Item(text="hialireza4@gmail.com", source="gmail.png"),
+                Item(text="hialireza4", source="twitter.png"),
+            ],
+            )
+        self.dialog.open()
 
 #func for the run app
 def start_app():
