@@ -19,4 +19,4 @@
 #### "EOS":"Eos"
 #### "LTC":"Litecoin"
 #### "MANA":"Decentraland"
-![enter image description here](https://i.postimg.cc/Z5xs5QgV/1.png)
+
