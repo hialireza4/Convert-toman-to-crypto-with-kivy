@@ -14,7 +14,6 @@ from bs4 import BeautifulSoup
 from lxml import etree
 import datetime
 from pycoingecko import CoinGeckoAPI
-import urllib3
 #library for showing icon path
 import glob
 
