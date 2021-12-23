@@ -5,4 +5,3 @@ requests
 beautifulsoup4
 lxml
 pycoingecko
-urllib3
