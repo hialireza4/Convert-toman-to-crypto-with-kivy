@@ -144,7 +144,7 @@ ScreenManager:
             id:toman
             hint_text: "Enter Price"
             mode: "rectangle"
-	    input_type : "number"
+	    input_filter: 'int'
             text: ""
             font_size:16
             pos_hint: {"center_x": .65, "center_y": .80}
