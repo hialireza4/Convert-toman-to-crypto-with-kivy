@@ -276,6 +276,7 @@ sm.add_widget(SettingWindow(name="settingwindow"))
 #main class for the run app
 class MrAsaConvertor(MDApp):
     def build(self):
+	self.icon = "assets\\cryptocurrencies.png"
         return Builder.load_string(KV)
 
     def on_start(self):
