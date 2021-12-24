@@ -144,7 +144,7 @@ ScreenManager:
             id:toman
             hint_text: "Enter Price"
             mode: "rectangle"
-	    input_filter: 'int'
+	        input_filter: 'int'
             text: ""
             font_size:16
             pos_hint: {"center_x": .65, "center_y": .80}
@@ -276,7 +276,7 @@ sm.add_widget(SettingWindow(name="settingwindow"))
 #main class for the run app
 class MrAsaConvertor(MDApp):
     def build(self):
-	self.icon = "assets\\cryptocurrencies.png"
+        self.icon = "assets//cryptocurrencies.png"
         return Builder.load_string(KV)
 
     def on_start(self):
